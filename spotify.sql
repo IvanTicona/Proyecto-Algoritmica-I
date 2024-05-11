@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-05-2024 a las 16:16:07
+-- Tiempo de generación: 11-05-2024 a las 16:29:06
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -281,6 +281,21 @@ INSERT INTO `gustos` (`id_gustos`, `id_genero`, `id_usuario`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `gustos_artista`
+--
+
+CREATE TABLE IF NOT EXISTS `gustos_artista` (
+  `id_gustos_artista` int(100) NOT NULL AUTO_INCREMENT,
+  `id_artista` int(100) NOT NULL,
+  `id_usuario` int(100) NOT NULL,
+  PRIMARY KEY (`id_gustos_artista`),
+  KEY `id_artista` (`id_artista`),
+  KEY `id_usuario` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -329,6 +344,13 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `edad`, `genero`, `t
 ALTER TABLE `gustos`
   ADD CONSTRAINT `gustos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
   ADD CONSTRAINT `gustos_ibfk_2` FOREIGN KEY (`id_genero`) REFERENCES `genero_musical` (`id_genero`);
+
+--
+-- Filtros para la tabla `gustos_artista`
+--
+ALTER TABLE `gustos_artista`
+  ADD CONSTRAINT `gustos_artista_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
+  ADD CONSTRAINT `gustos_artista_ibfk_1` FOREIGN KEY (`id_artista`) REFERENCES `artistas` (`id_artista`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
