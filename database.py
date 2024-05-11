@@ -1,8 +1,6 @@
 import pymysql
 from collections import deque
 
-
-
 mycon = pymysql.connect(
 
   host='localhost', 
@@ -101,6 +99,7 @@ vis = [False] * len(nodos)
 # Niveles de los nodos
 niveles = [0] * (len(nodos)+len(generos)+1)
 
+count = [0] * (len(nodos)+len(generos)+1)
 
 # BFS
 def BFS(nodoInicial):
@@ -109,7 +108,7 @@ def BFS(nodoInicial):
   # Agregamos el nodo inicial a la cola
   cola.append(nodoInicial)
   # Definimos el nivel del nodo inicial
-  niveles[nodoInicial]=0
+  niveles[nodoInicial] = 0
 
   # Mientras la cola no este vacia
   while cola:
@@ -123,9 +122,12 @@ def BFS(nodoInicial):
       amigo = grafo[nodoActual][i]
       # Verificamos el nivel del amigo
       if(niveles[amigo]<2):
-        niveles[amigo]=niveles[nodoActual]+1
+        niveles[amigo]=niveles[nodoActual] + 1
         # Agregamos el amigo a la cola
         cola.append(amigo)
+      if(niveles[amigo] == 2):
+        count[amigo] += 1
+
 
 # git merge algunaRama
 
@@ -134,4 +136,5 @@ nodoRaiz = getIndex("Ernesto")
 print(nodoRaiz)
 BFS(nodoRaiz)
 
-print(niveles[51:])
+# print(niveles[51:])
+print(count[51:])
