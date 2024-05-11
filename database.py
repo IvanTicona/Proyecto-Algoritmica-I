@@ -61,6 +61,7 @@ for i in range(len(gustos)):
 
 #Creamos el grafo
 grafo = [[] for _ in range(len(nodos)+len(generos)+1)]
+
 #Agregamos los nodos al grafo
 grafo[0].append(0)
 for i in range(1,len(generos)+1):
@@ -85,8 +86,6 @@ for i in range(len(grafo)):
 
 
 #Encontrar el indice de un nodo (Usuario) en el grafo
-
-
 def getIndex(nodo):
     for i in range(len(grafo)):
         if grafo[i][0] == nodo:
@@ -99,28 +98,40 @@ def getIndex(nodo):
 
 
 vis = [False] * len(nodos)
-
+# Niveles de los nodos
 niveles = [0] * (len(nodos)+len(generos)+1)
 
 
-
+# BFS
 def BFS(nodoInicial):
+  # Creamos una cola
   cola=deque()
+  # Agregamos el nodo inicial a la cola
   cola.append(nodoInicial)
+  # Definimos el nivel del nodo inicial
   niveles[nodoInicial]=0
+
+  # Mientras la cola no este vacia
   while cola:
+    # Sacamos el primer elemento de la cola
     nodoActual = cola.popleft()
-    if(niveles[nodoActual]>=2):
+    # Si el nivel del nodo actual es mayor o igual a 2, saltamos a la siguiente iteracion
+    if( niveles[nodoActual] >= 2):
       continue
-    for i in range(1,len(grafo[nodoActual])):
+    # Recorremos los amigos del nodo actual
+    for i in range( 1, len(grafo[nodoActual])): # Desde index 1 para no tomar el nombre del nodo
       amigo = grafo[nodoActual][i]
+      # Verificamos el nivel del amigo
       if(niveles[amigo]<2):
         niveles[amigo]=niveles[nodoActual]+1
+        # Agregamos el amigo a la cola
         cola.append(amigo)
+
+# git merge algunaRama
 
 
 nodoRaiz = getIndex("Ernesto")
-# print(nodoRaiz)
+print(nodoRaiz)
 BFS(nodoRaiz)
 
-print(niveles[50:])
+print(niveles[51:])
