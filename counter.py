@@ -3,7 +3,6 @@ from flet import theme
 
 def main(page: ft.Page):
     page.title = "Flet counter example"
-    # page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.START  # Cambiado a START para mover al inicio de la página
     page.horizontal_alignment = ft.MainAxisAlignment.CENTER
 
