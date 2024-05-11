@@ -1,8 +1,18 @@
 import flet as ft
 from flet import theme
+from flet import View, ElevatedButton
 
 def main(page: ft.Page):
     page.title = "Flet Proyect"
+
+    def route_change(e):
+        page.views.clear()
+        page.views.append(View(
+            route="/",
+            controls=[
+                ft.Text("Home")
+            ]
+        ))
 
     # page.theme = theme.Theme(color_scheme_seed=ft.colors.GREEN_500, font_family="Gotham")
     # page.update()
