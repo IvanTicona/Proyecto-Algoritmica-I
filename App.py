@@ -42,7 +42,6 @@ def main(page: ft.Page):
     page.window_width = 1000
     page.window_height = 600
     page.window_resizable = False
-
     
     def route_change(route):
         page.views.clear()
@@ -98,4 +97,5 @@ def main(page: ft.Page):
     page.go(page.route)
 
 
-ft.app(target=main, view=ft.AppView.WEB_BROWSER)
+ft.app(target=main)
+# , view=ft.AppView.WEB_BROWSER
