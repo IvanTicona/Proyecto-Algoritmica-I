@@ -1,31 +1,18 @@
 import flet as ft
 from flet import theme
-from flet import View, ElevatedButton
 
 def main(page: ft.Page):
     page.title = "Flet Proyect"
 
-    def route_change(e):
-        page.views.clear()
-        page.views.append(View(
-            route="/",
-            controls=[
-                ft.Text("Home")
-            ]
-        ))
+    # txt_number = ft.TextField(value="0", text_align=ft.TextAlign.CENTER, width=100)
 
-    # page.theme = theme.Theme(color_scheme_seed=ft.colors.GREEN_500, font_family="Gotham")
-    # page.update()
+    # def minus_click(e):
+    #     txt_number.value = str(int(txt_number.value) - 1)
+    #     page.update()
 
-    txt_number = ft.TextField(value="0", text_align=ft.TextAlign.CENTER, width=100)
-
-    def minus_click(e):
-        txt_number.value = str(int(txt_number.value) - 1)
-        page.update()
-
-    def plus_click(e):
-        txt_number.value = str(int(txt_number.value) + 1)
-        page.update()
+    # def plus_click(e):
+    #     txt_number.value = str(int(txt_number.value) + 1)
+    #     page.update()
 
     page.window_width = 1000
     page.window_height = 600
@@ -117,15 +104,6 @@ def main(page: ft.Page):
             ],
             height=page.window_height
         ),
-
-        # ft.Row(
-        #     [
-        #         ft.IconButton(ft.icons.REMOVE, on_click=minus_click),
-        #         txt_number,
-        #         ft.IconButton(ft.icons.ADD, on_click=plus_click),
-        #     ],
-        #     alignment=ft.MainAxisAlignment.CENTER,
-        # )
     )
 
 ft.app(main)

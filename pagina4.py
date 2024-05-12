@@ -1,15 +1,14 @@
 import flet as ft
 from flet import theme
+from flet import Page as page 
+
+def pagina4():
+
+    page.window_width = 1000
+    page.window_height = 600
+    page.window_resizable = False
 
 
-def main(page: ft.Page):
-    page.theme = ft.Theme(
-        color_scheme=ft.ColorScheme(
-            primary=ft.colors.GREEN,
-            primary_container=ft.colors.GREEN_200
-            # ...
-        ),
-    )
     #creamos los container de botones
     nom_generos = ["POP","TRAP","ALTERNATIVA","REGGATON","RAP", "CUMBIA","ROCK","REGGAE","SALSA"]
     page.scroll = ft.ScrollMode.ALWAYS
@@ -17,12 +16,13 @@ def main(page: ft.Page):
     botones = []
     for nombre in nom_generos:
         botones.append(ft.FilledButton(text=nombre,style = ft.ButtonStyle(
-                                color={
-                                    ft.MaterialState.HOVERED: ft.colors.WHITE,
-                                    ft.MaterialState.FOCUSED: ft.colors.BLUE,
-                                    ft.MaterialState.DEFAULT: ft.colors.BLACK,
+                                color={                                    
+                                    ft.MaterialState.HOVERED: ft.colors.BLACK,
+                                    ft.MaterialState.FOCUSED: ft.colors.YELLOW,
+                                    ft.MaterialState.DEFAULT: ft.colors.WHITE,
                                 },
-                            ),width=200,height=60),
+                                bgcolor= ft.colors.with_opacity(0.9, ft.colors.LIME_ACCENT_700)
+                            ),width=230,height=70),
                        )
         
 
@@ -31,10 +31,10 @@ def main(page: ft.Page):
         contain_botones.append(
             ft.Container(
                 content=boton,                
-                margin=20,
+                margin=10,
                 padding=0,
                 alignment=ft.alignment.center,
-                width=300,
+                width=250,
                 height=80,
                 border_radius=10,
                 ink=True,
@@ -95,19 +95,19 @@ def main(page: ft.Page):
         width=page.window_width,
     )
     imagen_fondo = ft.Image(
-                    src=f"C:/Users/pablo/Desktop/project/ProyectoAlgoritmicaI/imagenes/Bad-Bunny.jpg",
+                    src=f"./imagenes/Bad-Bunny.jpg",
                     width=page.window_width,
                     height=page.window_height,
                     fit=ft.ImageFit.COVER,
-                    opacity=0.9,   
+                    opacity=0.7,   
                 )
     
     imagen_verde = ft.Image(
-                    src=f"C:/Users/pablo/Desktop/project/ProyectoAlgoritmicaI/imagenes/verde_oscuro.png",
+                    src=f"./imagenes/azul.jpg",
                     width=page.window_width,
                     height=page.window_height,
                     fit=ft.ImageFit.COVER,
-                    opacity=0.8,   
+                    opacity=0.5,   
                 )
 
     st = ft.Stack([imagen_fondo,imagen_verde,bar,
@@ -120,9 +120,4 @@ def main(page: ft.Page):
             alignment=ft.MainAxisAlignment.CENTER,
         )])
 
-    page.add(
-        st
-        
-    )
-
-ft.app(main)
+    return st

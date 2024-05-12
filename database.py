@@ -78,8 +78,8 @@ for i in range(len(aristas)):
   grafo[aristas[i][1]].append(aristas[i][0]+50)
 
 #Mostar grafo como lista de adyacencia
-for i in range(len(grafo)):
-  print (i, grafo[i])
+# for i in range(len(grafo)):
+#   print (i, grafo[i])
 
 
 
@@ -95,7 +95,7 @@ def getIndex(nodo):
 
 
 
-vis = [False] * len(nodos)
+vis = [False] * (len(nodos)+len(generos)+1)
 # Niveles de los nodos
 niveles = [0] * (len(nodos)+len(generos)+1)
 
@@ -109,32 +109,58 @@ def BFS(nodoInicial):
   cola.append(nodoInicial)
   # Definimos el nivel del nodo inicial
   niveles[nodoInicial] = 0
-
+  vis[nodoInicial] = True
   # Mientras la cola no este vacia
   while cola:
     # Sacamos el primer elemento de la cola
     nodoActual = cola.popleft()
+    vis[nodoActual] = True
     # Si el nivel del nodo actual es mayor o igual a 2, saltamos a la siguiente iteracion
-    if( niveles[nodoActual] >= 2):
+    if(vis[nodoActual]):
+      continue
+    if(niveles[nodoActual] >= 6):
       continue
     # Recorremos los amigos del nodo actual
     for i in range( 1, len(grafo[nodoActual])): # Desde index 1 para no tomar el nombre del nodo
       amigo = grafo[nodoActual][i]
       # Verificamos el nivel del amigo
-      if(niveles[amigo]<2):
+      if(niveles[amigo]<6):
         niveles[amigo]=niveles[nodoActual] + 1
         # Agregamos el amigo a la cola
-        cola.append(amigo)
+        if(not vis[amigo]):
+          cola.append(amigo)
       if(niveles[amigo] == 2):
+        count[amigo] += 3
+      if(niveles[amigo] == 4):
+        count[amigo] += 2  
+      if(niveles[amigo] == 6):
         count[amigo] += 1
-
 
 # git merge algunaRama
 
 
 nodoRaiz = getIndex("Ernesto")
-print(nodoRaiz)
+# print(nodoRaiz)
 BFS(nodoRaiz)
 
 # print(niveles[51:])
-print(count[51:])
+# print(count[51:])
+
+def getGraph():
+  return grafo
+
+def getNames():
+  sim = []
+  for i in range(len(niveles)):
+    if (niveles[i] != 0):
+      sim.append(grafo[i][0])
+  return sim
+
+def getUserGenres(id):
+  return grafo[id+50][1:]
+
+def getGenreNames(idsGenresArray): #Recibe un array de ids de generos
+  names = []
+  for id in idsGenresArray:
+    names.append(grafo[id][0])
+  return names
