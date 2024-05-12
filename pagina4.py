@@ -55,7 +55,7 @@ def pagina4():
             fila = []
         contador = contador+1
 
-    print(filas)
+    # print(filas)
     col = ft.Column(filas,alignment=ft.MainAxisAlignment.CENTER)
 
     matriz_generos = ft.Column([
