@@ -3,35 +3,21 @@ from flet import Page as page
 #Importamos las paginas
 from LandingPage import LandingPage
 from pagina4 import pagina4
-from LoginPage import LoginPage
+# from LoginPage import LoginPage
 
-data_user = {
-    "name": "",
-    "email": "",
-    "password": "",
-    "age": "",
-    "gender": ""
-}
+class DataUserProvider():
+    def __init__(self, initial_data=None):
+        self.value = initial_data
 
-def button_clicked(e):
-        data_user["name"] = nombre.value
-        data_user["email"] = email.value
-        data_user['password'] = password.value
-        data_user['age'] = age.value
-        data_user['gender'] = gender.value
-        if not checkTerms.value:
-            print("You have accepted the terms and conditions")
-            return
-        
-        print(data_user)
-        # Resetear los campos
-        nombre.value = ""
-        email.value = ""
-        password.value = ""
-        age.value = ""
-        gender.value = ""
-        page.update()
+    def get_data_user(self):
+        return self.value
 
+    def set_data_user(self, data):
+        self.value = data
+
+data_user_provider = DataUserProvider(initial_data={
+    "username": "Dorian",
+})
 
 #Funcion principal
 def main(page: ft.Page):
@@ -51,9 +37,12 @@ def main(page: ft.Page):
                 [
                     ft.Stack(
                         [
+                            # ft.Text("Bienvenido a la aplicacion", size= 30),
+                            # # mostrar el nombre del usuario
+                            # ft.Text(data_user_provider.get_data_user()["username"]),
                             LandingPage(),
                             ft.ElevatedButton("Genres", on_click=lambda _: page.go("/store")),
-                            ft.ElevatedButton("Login", on_click=lambda _: page.go("/login")),
+                            # ft.ElevatedButton("Login", on_click=lambda _: page.go("/login")),
                         ]
                     )
                 ]
@@ -64,23 +53,16 @@ def main(page: ft.Page):
                 ft.View(
                     "/store",
                     [
-                      ft.Stack(
-                        [
-                            pagina4(),
+                    #   ft.Stack(
+                        # [
+                            # ft.Text("Genres", size=30),
+                            # ft.Text(data_user_provider.get_data_user()["username"]),
                             ft.ElevatedButton("Menu", on_click=lambda _: page.go("/"), icon=ft.icons.ARROW_BACK),
-                        ]
-                      )
+                            pagina4(),
+                        # ]
+                    #   )
                     ],
-                    scroll=ft.ScrollMode.ALWAYS,
-                )
-            )
-        if page.route == "/login":
-            page.views.append(
-                ft.View(
-                    "/login",
-                    [
-                        LoginPage(data_user,page, button_clicked),
-                    ]
+                    # scroll=ft.ScrollMode.ALWAYS,
                 )
             )
         page.update()
@@ -97,5 +79,4 @@ def main(page: ft.Page):
     page.go(page.route)
 
 
-ft.app(target=main)
-# , view=ft.AppView.WEB_BROWSER
+ft.app(target=main, view=ft.AppView.WEB_BROWSER)

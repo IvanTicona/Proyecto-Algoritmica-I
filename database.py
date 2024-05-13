@@ -5,7 +5,7 @@ mycon = pymysql.connect(
 
   host='localhost', 
 
-  port=3306, 
+  port=3307, 
 
   user='root', 
 
@@ -78,8 +78,8 @@ for i in range(len(aristas)):
   grafo[aristas[i][1]].append(aristas[i][0]+50)
 
 #Mostar grafo como lista de adyacencia
-# for i in range(len(grafo)):
-#   print (i, grafo[i])
+for i in range(len(grafo)):
+  print (i, grafo[i])
 
 
 
@@ -103,48 +103,56 @@ count = [0] * (len(nodos)+len(generos)+1)
 
 # BFS
 def BFS(nodoInicial):
-  # Creamos una cola
-  cola=deque()
-  # Agregamos el nodo inicial a la cola
+  cola = deque()
   cola.append(nodoInicial)
-  # Definimos el nivel del nodo inicial
   niveles[nodoInicial] = 0
-  vis[nodoInicial] = True
-  # Mientras la cola no este vacia
+
   while cola:
-    # Sacamos el primer elemento de la cola
     nodoActual = cola.popleft()
+    if vis[nodoActual]:
+      continue 
     vis[nodoActual] = True
-    # Si el nivel del nodo actual es mayor o igual a 2, saltamos a la siguiente iteracion
-    if(vis[nodoActual]):
-      continue
-    if(niveles[nodoActual] >= 6):
-      continue
-    # Recorremos los amigos del nodo actual
-    for i in range( 1, len(grafo[nodoActual])): # Desde index 1 para no tomar el nombre del nodo
+
+    for i in range(1,len(grafo[nodoActual])):
       amigo = grafo[nodoActual][i]
-      # Verificamos el nivel del amigo
-      if(niveles[amigo]<6):
-        niveles[amigo]=niveles[nodoActual] + 1
-        # Agregamos el amigo a la cola
-        if(not vis[amigo]):
-          cola.append(amigo)
-      if(niveles[amigo] == 2):
-        count[amigo] += 3
-      if(niveles[amigo] == 4):
-        count[amigo] += 2  
-      if(niveles[amigo] == 6):
+
+      if not vis[amigo]:
+        niveles[amigo] = niveles[nodoActual] + 1
+        cola.append(amigo)
+      if niveles[amigo] == 2:
+        if niveles[nodoActual] == 1:
+          count[amigo] += 8
+        else:
+          count[amigo] += 2
+      if niveles[amigo] == 4:
         count[amigo] += 1
 
-# git merge algunaRama
-
-
-nodoRaiz = getIndex("Ernesto")
+nodoRaiz = getIndex("Daniel")
 # print(nodoRaiz)
+
 BFS(nodoRaiz)
 
-# print(niveles[51:])
-# print(count[51:])
+print("COUNT ========================")
+print(count[51:])
+print("NIVELES ========================")
+print(niveles[51:])
+
+newArray = count[51:]
+
+indices_ordenados = sorted(range(len(newArray)), key=lambda i: newArray[i], reverse=True)
+
+def colaDeIndices():
+  cola=deque()
+  for indice in indices_ordenados:
+    cola.append(indice)
+  return cola
+
+colita = colaDeIndices()
+
+print(colita.popleft())
+
+print("COLA ================")
+print(colaDeIndices())
 
 def getGraph():
   return grafo
