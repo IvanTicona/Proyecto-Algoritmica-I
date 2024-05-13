@@ -2,9 +2,27 @@ import flet as ft
 from flet import theme
 from flet import Page as page 
 import database as dt
+from database import *
+from pymysql import *
 
 
-def GenresPage(page: ft.Page, data_user_provider):
+mycon = pymysql.connect(
+
+  host='localhost',
+
+  port=3307,
+
+  user='root', 
+
+  password='', 
+
+  database='spotify'
+)
+
+ejecutorDeQueries2=mycon.cursor()
+
+
+def GenresPage(page: ft.Page, id):
 
     escogidos= []
 
@@ -141,6 +159,11 @@ def GenresPage(page: ft.Page, data_user_provider):
     )
 
     def agregarGeneros():
+        for genre in escogidos:
+            idGenre = getIndex(genre)
+            # sql = """INSERT INTO gustos (id_gustos, id_genero, id_usuario) VALUES (%i, %i, %i)"""
+            # datos = ('',id+4, id)
+            ejecutorDeQueries2.execute("INSERT INTO gustos (id_genero, id_usuario) VALUES (%s, %s)", (idGenre, id))
         print(data_user_provider.get_data_user(), escogidos)
         page.go("/")
 

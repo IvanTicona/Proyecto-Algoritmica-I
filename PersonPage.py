@@ -9,17 +9,10 @@ def generateUserGenreImages(id):
 
 def PersonPage(page: ft.Page):
     cola = deque()
-    # BFS(getIndex("Daniel"))
-    # vector = indices_ordenados
-    # vector = [5,2,3,5,6,2,4]
-    vector = BFS(getIndex("Daniel")) 
-    print(vector)
-    
+    vector = BFS(getIndex("Daniel"))
     
     for i in range(len(vector)):
         cola.append(vector[i])
-
-    print("Rerender")
 
     id_user=cola.popleft()+1
 
@@ -32,8 +25,6 @@ def PersonPage(page: ft.Page):
     image4 =ft.Image(src=f"./YALISTASBEBE/{generateUserGenreImages(id_user)[3]}.png", width=200, height=200) #for genre in generateUserGenreImages(id_user)
     image5 =ft.Image(src=f"./YALISTASBEBE/{generateUserGenreImages(id_user)[4]}.png", width=200, height=200) #for genre in generateUserGenreImages(id_user)
 
-
-    
 
     def rechazar_usuario():
         if cola:
@@ -49,24 +40,10 @@ def PersonPage(page: ft.Page):
             image4.src=f"./YALISTASBEBE/{generateUserGenreImages(id)[3]}.png"
             image5.src=f"./YALISTASBEBE/{generateUserGenreImages(id)[4]}.png"
 
-            #imagenes_generos.src=f"./YALISTASBEBE/{genre}.png"
             cola.append(id)
             page.update()
-        
-
-
-
-    page.title = "FaveFusion"
-
-    
-
-    page.theme = theme.Theme(color_scheme_seed="green", font_family="Gotham")
-    page.update()
-
 
     id = cola.popleft()
-
-
 
     content2= ft.Container(
                 content= ft.Container(
@@ -95,7 +72,7 @@ def PersonPage(page: ft.Page):
         ]
     )
 
-    btn_aceptar = ft.FilledButton("Aceptar", on_click= lambda e: print("Aceptar"))
+    btn_aceptar = ft.FilledButton("Aceptar", on_click= lambda e: page.go("/match"))
     row_button_aceptar= ft.Row(
         [
             btn_aceptar
@@ -127,9 +104,7 @@ def PersonPage(page: ft.Page):
 
                                 ft.Row(
                                 [
-                                    ft.FilledButton("Login", on_click=print("Login")),
-                                    ft.FilledButton("Playlist", on_click=print("Playlist")),
-                                    ft.FilledButton("Settings", on_click=print("Settings"))
+                                    ft.FilledButton("Home", on_click= lambda e: page.go("/home")),
                                 ],
                                 alignment=ft.MainAxisAlignment.START
                                 )

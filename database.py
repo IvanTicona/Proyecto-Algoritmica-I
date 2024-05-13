@@ -29,6 +29,8 @@ ejecutorDeQueries.execute("SELECT id_gustos, id_genero, id_usuario FROM gustos")
 
 gustos = ejecutorDeQueries.fetchall() #Tupla de gustos
 
+# ejecutorDeQueries.execute()
+
 
 
 #==================================================================================================
@@ -71,7 +73,7 @@ for i in range(0,len(nodos)):
 
 
 
-mycon.close()
+# mycon.close()
 
 #Agregar aristas
 for i in range(len(aristas)):

@@ -3,8 +3,10 @@ from flet import Page as page
 #Importamos las paginas
 from LandingPage import LandingPage
 from GenresPage import GenresPage
-from page_person import PersonPage
-# from LoginPage import LoginPage
+from PersonPage import PersonPage
+from MatchPage import MatchPage
+from LoginPage import LoginPage
+
 
 class DataUserProvider():
     def __init__(self, initial_data=None):
@@ -17,7 +19,11 @@ class DataUserProvider():
         self.value = data
 
 data_user_provider = DataUserProvider(initial_data={
-    "username": "Dorian",
+    "ID": "",
+    "username": "",
+    "email": "",
+    "password": "",
+    "age": ""
 })
 
 
@@ -34,6 +40,7 @@ def main(page: ft.Page):
     def changeName(data):
         data_user_provider.set_data_user(data)
         name.value = data_user_provider.get_data_user()["username"]
+        print(data_user_provider.get_data_user())
         page.update()
     
     def route_change(route):
@@ -42,20 +49,23 @@ def main(page: ft.Page):
             ft.View(
                 "/",
                 [
-                    ft.Stack(
-                        [
-                            LandingPage(page),
-                            ft.Column(
-                                [
-                                    name,
-                                    ft.ElevatedButton("Change name", on_click= lambda e: changeName(data={"username": "Daniel"})),
-                                ]
-                            )
-                        ]
-                    )
+                    LoginPage(page, changeName),
                 ]
             )
         )
+        if page.route == "/home":
+            page.views.append(
+                ft.View(
+                    "/",
+                    [
+                        ft.Stack(
+                            [
+                                LandingPage(page, data_user_provider.get_data_user()),
+                            ]
+                        )
+                    ]
+                )
+            )
         if page.route == "/genres":
             page.views.append(
                 ft.View(
@@ -63,9 +73,7 @@ def main(page: ft.Page):
                     [
                       ft.Stack(
                         [
-                            name,
-                            GenresPage(page, data_user_provider),
-                            ft.ElevatedButton("Menu", on_click=lambda _: page.go("/"), icon=ft.icons.ARROW_BACK),
+                            GenresPage(page, 7),
                         ]
                       )
                     ]
@@ -79,6 +87,15 @@ def main(page: ft.Page):
                         PersonPage(page),
                     ],
                     scroll= ft.ScrollMode.ALWAYS
+                )
+            )
+        if page.route == "/match":
+            page.views.append(
+                ft.View(
+                    "/match",
+                    [
+                        MatchPage(page),
+                    ]
                 )
             )
         page.update()

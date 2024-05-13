@@ -2,7 +2,7 @@ import flet as ft
 from flet import Page as page
 
 
-def LoginPage(page: ft.Page):
+def LoginPage(page: ft.Page, changeName):
 
     title =  ft.Text("Sign Up",width=300,size=35,text_align="center",weight="w900")
     nombre = ft.TextField(width=300,height=60,hint_text="Username",border="underline",color="black",prefix_icon = ft.icons.PERSON)
@@ -13,32 +13,30 @@ def LoginPage(page: ft.Page):
     checkTerms = ft.Checkbox(label="I accept the terms and conditions",check_color = "black")
 
 
-    data_user = {
-        "name": "",
-        "email": "",
-        "password": "",
-        "age": "",
-        "gender": ""
-    }
-
     def button_clicked(e):
-            data_user["name"] = nombre.value
-            data_user["email"] = email.value
-            data_user['password'] = password.value
-            data_user['age'] = age.value
-            data_user['gender'] = gender.value
-            if not checkTerms.value:
-                print("You have accepted the terms and conditions")
-                return
-            
-            print(data_user)
-            # Resetear los campos
-            nombre.value = ""
-            email.value = ""
-            password.value = ""
-            age.value = ""
-            gender.value = ""
-            page.update()
+        changeName({
+            "ID": "",
+            "username": nombre.value,
+            "email": email.value,
+            "password": password.value,
+            "age": age.value,
+        })
+
+        # if not checkTerms.value:
+        #     print("You have accepted the terms and conditions")
+        #     return
+
+        # print(data_user)
+        # Resetear los campos
+        nombre.value = ""
+        email.value = ""
+        password.value = ""
+        age.value = ""
+        gender.value = ""
+        page.update()
+        page.go("/home")
+
+
 
     page.title = "Login"
     loginPage = ft.Stack(
@@ -71,7 +69,5 @@ def LoginPage(page: ft.Page):
                 )
             ]
         )
-    return [loginPage, button_clicked]
-    # page.add(loginPage)
 
-ft.app(LoginPage)
+    return loginPage

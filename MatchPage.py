@@ -2,7 +2,7 @@ import flet as ft
 from flet import theme
 from database import *
 
-def main(page: ft.Page):
+def MatchPage(page: ft.Page):
     page.title = "Flet Project"
 
     page.theme = theme.Theme(color_scheme_seed="green", font_family="Gotham")
@@ -53,9 +53,7 @@ def main(page: ft.Page):
                         ),
                         ft.Row(
                             [
-                                ft.FilledButton("Login", on_click=print("Login")),
-                                ft.FilledButton("Playlist", on_click=print("Playlist")),
-                                ft.FilledButton("Settings", on_click=print("Settings")),
+                                ft.FilledButton("Home", on_click= lambda e: page.go("/home")),
                             ],
                             alignment=ft.MainAxisAlignment.START,
                         )
@@ -75,8 +73,4 @@ def main(page: ft.Page):
                 )
             ]
         )
-    page.window_width = 1000
-    page.windo_height = 600
-    page.window_resizable = False
-    page.add(stack)
-ft.app(main)
+    return stack
