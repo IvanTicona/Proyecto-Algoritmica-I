@@ -29,50 +29,7 @@ AppBar = ft.Row(
     width=page.window_width,
 )
 
-Menu = ft.Column(
-    [
-        ft.Row(
-            [
-                ft.Container(
-                    content = ft.Row(
-                        [
-                            ft.FilledButton("Buscar por Genero", height=60, width=150, style= ft.ButtonStyle(bgcolor= ft.colors.GREY_700, color= ft.colors.WHITE)),
-                            ft.FilledButton("Buscar por artista", height=60, width=150, style= ft.ButtonStyle(bgcolor= ft.colors.GREY_700, color= ft.colors.WHITE)),
-                        ],
-                        alignment=ft.MainAxisAlignment.SPACE_AROUND,
-                        width=700,
-                    ),
-                    margin=ft.margin.only(top=0, left=0, right=30, bottom=0),
-                )
-            ],
-            alignment=ft.MainAxisAlignment.CENTER,
-            height=50
-        ),
-        ft.Row(
-            [
-                ft.Container(
-                    content = ft.Row(
-                        [
-                            ft.FilledButton("Agregar genero a mi perfil", height=60, width=150, style= ft.ButtonStyle(bgcolor= ft.colors.GREY_700, color= ft.colors.WHITE)),
-                            ft.FilledButton("Eliminar genero de mi perfil", height=60, width=150, style= ft.ButtonStyle(bgcolor= ft.colors.GREY_700, color= ft.colors.WHITE)),
-                            
-                        ],
-                        alignment=ft.MainAxisAlignment.SPACE_AROUND,
-                        width=700,
-                    ),
-                    margin=ft.margin.only(top=0, left=0, right=30, bottom=0)
-                )
-            ],
-            alignment=ft.MainAxisAlignment.CENTER,
-            height=50
-        )
-    ],
-    alignment=ft.MainAxisAlignment.CENTER,
-    height=500,
-    spacing=60
-)
-
-def LandingPage():
+def LandingPage(page: ft.Page):
     landingPage = ft.Stack(
                 [
                     ft.Image(
@@ -85,7 +42,48 @@ def LandingPage():
                     ft.Column(
                         [
                             AppBar,
-                            Menu
+                            ft.Column(
+                                [
+                                    ft.Row(
+                                        [
+                                            ft.Container(
+                                                content = ft.Row(
+                                                    [
+                                                        ft.FilledButton("Buscar por Genero", on_click= lambda e: page.go("/person"), height=60, width=150, style= ft.ButtonStyle(bgcolor= ft.colors.GREY_700, color= ft.colors.WHITE)),
+                                                        ft.FilledButton("Buscar por artista", height=60, width=150, style= ft.ButtonStyle(bgcolor= ft.colors.GREY_700, color= ft.colors.WHITE)),
+                                                    ],
+                                                    alignment=ft.MainAxisAlignment.SPACE_AROUND,
+                                                    width=700,
+                                                ),
+                                                margin=ft.margin.only(top=0, left=0, right=30, bottom=0),
+                                            )
+                                        ],
+                                        alignment=ft.MainAxisAlignment.CENTER,
+                                        height=50
+                                    ),
+                                    ft.Row(
+                                        [
+                                            ft.Container(
+                                                content = ft.Row(
+                                                    [
+                                                        ft.FilledButton("Agregar genero a mi perfil", on_click= lambda e: page.go("/genres") , height=60, width=150, style= ft.ButtonStyle(bgcolor= ft.colors.GREY_700, color= ft.colors.WHITE)),
+                                                        ft.FilledButton("Eliminar genero de mi perfil", height=60, width=150, style= ft.ButtonStyle(bgcolor= ft.colors.GREY_700, color= ft.colors.WHITE)),
+                                                        
+                                                    ],
+                                                    alignment=ft.MainAxisAlignment.SPACE_AROUND,
+                                                    width=700,
+                                                ),
+                                                margin=ft.margin.only(top=0, left=0, right=30, bottom=0)
+                                            )
+                                        ],
+                                        alignment=ft.MainAxisAlignment.CENTER,
+                                        height=50
+                                    )
+                                ],
+                                alignment=ft.MainAxisAlignment.CENTER,
+                                height=500,
+                                spacing=60
+                            )
                         ]
                     ),
                 ],

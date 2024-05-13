@@ -3,30 +3,16 @@ from flet import theme
 from flet import Page as page 
 import database as dt
 
-def on_column_scroll(e: ft.OnScrollEvent):
-        print(
-            f"Type: {e.event_type}, pixels: {e.pixels}, min_scroll_extent: {e.min_scroll_extent}, max_scroll_extent: {e.max_scroll_extent}"
-        )
 
-def pagina4():
+def GenresPage(page: ft.Page, data_user_provider):
 
-    escogidos= [[] for _ in range(51)]
+    escogidos= []
 
     #-------------------------------
 
-
-    #-------------------------
-    #configuracion de la pagina
-    page.window_width = 1000
-    page.window_height = 600
-    page.window_resizable = False
-    #-------------------------
-
-
-    #---------------------------------
     #ponemos la imagen de fondo 
     imagen_fondo = ft.Image(
-                    src=f"C:/Users/pablo/Desktop/project/ProyectoAlgoritmicaI/imagenes/Bad-Bunny.jpg",
+                    src=f"./imagenes/Bad-Bunny.jpg",
                     width=page.window_width,
                     height=page.window_height,
                     fit=ft.ImageFit.COVER,
@@ -34,7 +20,7 @@ def pagina4():
                 )
     
     imagen_verde = ft.Image(
-                    src=f"C:/Users/pablo/Desktop/project/ProyectoAlgoritmicaI/imagenes/azul.jpg",
+                    src=f"./imagenes/azul.jpg",
                     width=page.window_width,
                     height=page.window_height,
                     fit=ft.ImageFit.COVER,
@@ -55,19 +41,7 @@ def pagina4():
                 color=ft.colors.GREEN_400,
             ),
             margin=ft.margin.only(top=0, left=30, right=0, bottom=0),
-        ),
-        # ft.Container(
-        #     content = ft.Row(
-        #         [
-        #             ft.FilledButton("Login", height=40, width=120,on_click= lambda e : print(escogidos),),
-        #             ft.FilledButton("Playlist", height=40, width=120),
-        #             ft.FilledButton("Settings", height=40, width=120),
-        #         ],
-        #         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-        #         width=400,
-        #     ),
-        #     margin=ft.margin.only(top=10, left=0, right=30, bottom=0)
-        # )
+        )
         ],
         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
         width=page.window_width,
@@ -97,11 +71,7 @@ def pagina4():
     botones = []
     iterador = 0
     def presionar(a,ind):
-            r = ind    
-            escogidos[ind] = a
-            print(escogidos)
-
-
+        escogidos.append(a)
 
 
     for nombre in nom_generos:
@@ -169,9 +139,14 @@ def pagina4():
             width=900,
             scroll=ft.ScrollMode.ALWAYS,        
     )
+
+    def agregarGeneros():
+        print(data_user_provider.get_data_user(), escogidos)
+        page.go("/")
+
     boton_aceptar = ft.FilledButton(
                 content=ft.Text("ACEPTAR",size = 20),
-                on_click=lambda e : print("cmabiar pagina"),
+                on_click=lambda e : agregarGeneros(),
                 style = ft.ButtonStyle(
                                     color={                                    
                                         ft.MaterialState.HOVERED: ft.colors.BLACK,

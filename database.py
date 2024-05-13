@@ -1,11 +1,12 @@
 import pymysql
+import flet as ft
 from collections import deque
 
 mycon = pymysql.connect(
 
-  host='localhost', 
+  host='localhost',
 
-  port=3307, 
+  port=3307,
 
   user='root', 
 
@@ -16,7 +17,7 @@ mycon = pymysql.connect(
 
 ejecutorDeQueries=mycon.cursor()
 
-ejecutorDeQueries.execute("SELECT id_usuario, nombre, apellido FROM usuarios")
+ejecutorDeQueries.execute("SELECT id_usuario, nombre, apellido, edad, descripcion FROM usuarios")
 
 datos = ejecutorDeQueries.fetchall() #Tupla de usarios
 
@@ -78,8 +79,8 @@ for i in range(len(aristas)):
   grafo[aristas[i][1]].append(aristas[i][0]+50)
 
 #Mostar grafo como lista de adyacencia
-for i in range(len(grafo)):
-  print (i, grafo[i])
+# for i in range(len(grafo)):
+  # print (i, grafo[i])
 
 
 
@@ -127,19 +128,23 @@ def BFS(nodoInicial):
       if niveles[amigo] == 4:
         count[amigo] += 1
 
-nodoRaiz = getIndex("Daniel")
+  return sorted(range(len(count[51:])), key=lambda i: count[51:][i], reverse=True)
+
+
+# nodoRaiz = getIndex("Fernanda")
 # print(nodoRaiz)
 
-BFS(nodoRaiz)
+# BFS(nodoRaiz)
 
-print("COUNT ========================")
-print(count[51:])
-print("NIVELES ========================")
-print(niveles[51:])
+# print("COUNT ========================")
+# print(count[51:])
+# print("NIVELES ========================")
+# print(niveles[51:])
 
 newArray = count[51:]
 
-indices_ordenados = sorted(range(len(newArray)), key=lambda i: newArray[i], reverse=True)
+# indices_ordenados = sorted(range(len(newArray)), key=lambda i: newArray[i], reverse=True)
+# indices_ordenados = 
 
 def colaDeIndices():
   cola=deque()
@@ -147,12 +152,18 @@ def colaDeIndices():
     cola.append(indice)
   return cola
 
-colita = colaDeIndices()
+# print("COLA ================")
+# print(colaDeIndices())
 
-print(colita.popleft())
+# git merge algunaRama
 
-print("COLA ================")
-print(colaDeIndices())
+
+#nodoRaiz = getIndex("Ernesto")
+#print(nodoRaiz)
+#BFS(nodoRaiz)
+
+#print(niveles[51:])
+#print(count[51:])
 
 def getGraph():
   return grafo
@@ -164,6 +175,12 @@ def getNames():
       sim.append(grafo[i][0])
   return sim
 
+def getUserName(id):
+  return datos[id-1][1]
+
+#print(getUserName(1))
+
+
 def getUserGenres(id):
   return grafo[id+50][1:]
 
@@ -172,3 +189,42 @@ def getGenreNames(idsGenresArray): #Recibe un array de ids de generos
   for id in idsGenresArray:
     names.append(grafo[id][0])
   return names
+
+def getAllGenresNames():
+  return generosNames
+
+def getAllUserNames():
+  user_names=[]
+  for i in range (0, len(datos)):
+    user_names.append(datos[i][1])
+  return user_names
+  
+#print(getAllUserNames())
+
+#print(generosNames)
+def getUserAge(id):
+  return datos[id-1][3]
+
+def getUserDescription(id):
+  return datos[id-1][4]
+#print(getUserAge(1))
+
+
+#AsignarImagenesALosGeneros
+all_genre_names = getAllGenresNames()
+genres_images = {}
+for genre_name in range(1,len(all_genre_names)):
+      image_genre = f"{all_genre_names[genre_name]}.png"  
+      genres_images[all_genre_names[genre_name]] = image_genre
+
+
+#AsignarImagenesALosUsuarios
+all_user_names = getAllUserNames()
+user_images = {}
+for user_name in range(0,len(all_user_names)):
+      image_user = f"{all_user_names[user_name]}.png"  
+      user_images[all_user_names[user_name]] = image_user
+
+
+
+

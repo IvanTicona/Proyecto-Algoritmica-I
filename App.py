@@ -2,7 +2,8 @@ import flet as ft
 from flet import Page as page
 #Importamos las paginas
 from LandingPage import LandingPage
-from pagina4 import pagina4
+from GenresPage import GenresPage
+from page_person import PersonPage
 # from LoginPage import LoginPage
 
 class DataUserProvider():
@@ -19,15 +20,21 @@ data_user_provider = DataUserProvider(initial_data={
     "username": "Dorian",
 })
 
-#Funcion principal
-def main(page: ft.Page):
 
+def main(page: ft.Page):
 
     page.title = "Nombre de la aplicacion"
 
     page.window_width = 1000
     page.window_height = 600
     page.window_resizable = False
+
+    name = ft.Text(data_user_provider.get_data_user()["username"])
+
+    def changeName(data):
+        data_user_provider.set_data_user(data)
+        name.value = data_user_provider.get_data_user()["username"]
+        page.update()
     
     def route_change(route):
         page.views.clear()
@@ -37,32 +44,41 @@ def main(page: ft.Page):
                 [
                     ft.Stack(
                         [
-                            # ft.Text("Bienvenido a la aplicacion", size= 30),
-                            # # mostrar el nombre del usuario
-                            # ft.Text(data_user_provider.get_data_user()["username"]),
-                            LandingPage(),
-                            ft.ElevatedButton("Genres", on_click=lambda _: page.go("/store")),
-                            # ft.ElevatedButton("Login", on_click=lambda _: page.go("/login")),
+                            LandingPage(page),
+                            ft.Column(
+                                [
+                                    name,
+                                    ft.ElevatedButton("Change name", on_click= lambda e: changeName(data={"username": "Daniel"})),
+                                ]
+                            )
                         ]
                     )
                 ]
             )
         )
-        if page.route == "/store":
+        if page.route == "/genres":
             page.views.append(
                 ft.View(
-                    "/store",
+                    "/genres",
                     [
-                    #   ft.Stack(
-                        # [
-                            # ft.Text("Genres", size=30),
-                            # ft.Text(data_user_provider.get_data_user()["username"]),
+                      ft.Stack(
+                        [
+                            name,
+                            GenresPage(page, data_user_provider),
                             ft.ElevatedButton("Menu", on_click=lambda _: page.go("/"), icon=ft.icons.ARROW_BACK),
-                            pagina4(),
-                        # ]
-                    #   )
+                        ]
+                      )
+                    ]
+                )
+            )
+        if page.route == "/person":
+            page.views.append(
+                ft.View(
+                    "/person",
+                    [
+                        PersonPage(page),
                     ],
-                    # scroll=ft.ScrollMode.ALWAYS,
+                    scroll= ft.ScrollMode.ALWAYS
                 )
             )
         page.update()
