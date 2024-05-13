@@ -7,9 +7,9 @@ def generateUserGenreImages(id):
     return user_genres
     
 
-def PersonPage(page: ft.Page):
+def PersonPage(page: ft.Page, userID: int):
     cola = deque()
-    vector = BFS(getIndex("Daniel"))
+    vector = BFS(userID)
     
     for i in range(len(vector)):
         cola.append(vector[i])

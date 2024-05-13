@@ -6,23 +6,7 @@ from database import *
 from pymysql import *
 
 
-mycon = pymysql.connect(
-
-  host='localhost',
-
-  port=3307,
-
-  user='root', 
-
-  password='', 
-
-  database='spotify'
-)
-
-ejecutorDeQueries2=mycon.cursor()
-
-
-def GenresPage(page: ft.Page, id):
+def GenresPage(page: ft.Page, id, data_user):
 
     escogidos= []
 
@@ -161,11 +145,11 @@ def GenresPage(page: ft.Page, id):
     def agregarGeneros():
         for genre in escogidos:
             idGenre = getIndex(genre)
-            # sql = """INSERT INTO gustos (id_gustos, id_genero, id_usuario) VALUES (%i, %i, %i)"""
-            # datos = ('',id+4, id)
-            ejecutorDeQueries2.execute("INSERT INTO gustos (id_genero, id_usuario) VALUES (%s, %s)", (idGenre, id))
-        print(data_user_provider.get_data_user(), escogidos)
-        page.go("/")
+            ejecutorDeQueries.execute("INSERT INTO gustos (id_gustos, id_genero, id_usuario) VALUES (%s, %s, %s)", ('',idGenre, id))
+            mycon.commit()
+
+        print(data_user.get_data_user(), escogidos)
+        page.go("/home")
 
     boton_aceptar = ft.FilledButton(
                 content=ft.Text("ACEPTAR",size = 20),

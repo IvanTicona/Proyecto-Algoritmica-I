@@ -5,11 +5,6 @@ from database import *
 def MatchPage(page: ft.Page):
     page.title = "Flet Project"
 
-    page.theme = theme.Theme(color_scheme_seed="green", font_family="Gotham")
-    page.update()
-
-    txt_number = ft.TextField(value="0", text_align=ft.TextAlign.CENTER, width=100)
-
     row_image_and_text = ft.Row(
         [
             ft.Image(src=f"./losgenericos/{getUserName(1)}.jpg", width=200, height=200, fit=ft.ImageFit.CONTAIN),
@@ -33,7 +28,7 @@ def MatchPage(page: ft.Page):
             [
                 ft.Container(height=100),
                 ft.Image(
-                    src=f"./match.png",
+                    src=f"./imagenes/match.jpg",
                     width=page.window_width,
                     height=page.window_height,
                     fit=ft.ImageFit.COVER,

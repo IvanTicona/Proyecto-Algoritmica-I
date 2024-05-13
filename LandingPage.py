@@ -1,9 +1,23 @@
 import flet as ft
 from flet import Page as page
+from database import *
 
 
+def LandingPage(page: ft.Page, data_user, changeData):
 
-def LandingPage(page: ft.Page, data_user):
+    def logoutFn(e):
+        changeData({
+            "ID": 0,
+            "username": "",
+            "email": "",
+            "password": "",
+            "age": 0
+        })
+        page.go("/login")
+
+    
+
+
     landingPage = ft.Stack(
                 [
                     ft.Image(
@@ -43,7 +57,7 @@ def LandingPage(page: ft.Page, data_user):
                                                 content = ft.Row(
                                                     [
                                                         ft.FilledButton( content= ft.Text("Buscar por Genero", size=17), on_click= lambda e: page.go("/person"), height=150, width=200, style= ft.ButtonStyle(bgcolor= ft.colors.GREY_700, color= ft.colors.WHITE)),
-                                                        ft.FilledButton(content= ft.Text("Logout", size=20), height=150, on_click= lambda e: page.go("/login"), width=200, style= ft.ButtonStyle(bgcolor= ft.colors.GREY_700, color= ft.colors.WHITE)),
+                                                        ft.FilledButton(content= ft.Text("Logout", size=20), height=150, on_click= logoutFn, width=200, style= ft.ButtonStyle(bgcolor= ft.colors.GREY_700, color= ft.colors.WHITE)),
                                                     ],
                                                     alignment=ft.MainAxisAlignment.SPACE_AROUND,
                                                     height=150,

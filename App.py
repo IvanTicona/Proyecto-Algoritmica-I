@@ -6,6 +6,7 @@ from GenresPage import GenresPage
 from PersonPage import PersonPage
 from MatchPage import MatchPage
 from LoginPage import LoginPage
+from database import *
 
 
 class DataUserProvider():
@@ -17,13 +18,28 @@ class DataUserProvider():
 
     def set_data_user(self, data):
         self.value = data
+    
+    def setID(self, ID):
+        self.value['ID'] = ID
 
-data_user_provider = DataUserProvider(initial_data={
+    def getID(self):
+        return self.value['ID']
+    
+    def getNombre(self):
+        return self.value['nombre']
+    
+    def getEdad(self):
+        return self.value['edad']
+    
+    def getCorreo(self):
+        return self.value['correo']
+
+data_user = DataUserProvider(initial_data={
     "ID": "",
-    "username": "",
-    "email": "",
+    "nombre": "",
     "password": "",
-    "age": ""
+    "correo": "",
+    "edad": 0
 })
 
 
@@ -35,12 +51,13 @@ def main(page: ft.Page):
     page.window_height = 600
     page.window_resizable = False
 
-    name = ft.Text(data_user_provider.get_data_user()["username"])
+    nombre = data_user.getNombre()
+    edad = data_user.getEdad()
+    correo = data_user.getCorreo()
 
-    def changeName(data):
-        data_user_provider.set_data_user(data)
-        name.value = data_user_provider.get_data_user()["username"]
-        print(data_user_provider.get_data_user())
+
+    def changeData(data):
+        data_user.set_data_user(data)
         page.update()
     
     def route_change(route):
@@ -49,7 +66,7 @@ def main(page: ft.Page):
             ft.View(
                 "/",
                 [
-                    LoginPage(page, changeName),
+                    LoginPage(page, changeData, data_user),
                 ]
             )
         )
@@ -60,7 +77,7 @@ def main(page: ft.Page):
                     [
                         ft.Stack(
                             [
-                                LandingPage(page, data_user_provider.get_data_user()),
+                                LandingPage(page, data_user.get_data_user(), changeData),
                             ]
                         )
                     ]
@@ -73,7 +90,10 @@ def main(page: ft.Page):
                     [
                       ft.Stack(
                         [
-                            GenresPage(page, 7),
+
+                            GenresPage(page, data_user.getID(), data_user),
+
+
                         ]
                       )
                     ]
@@ -84,7 +104,7 @@ def main(page: ft.Page):
                 ft.View(
                     "/person",
                     [
-                        PersonPage(page),
+                        PersonPage(page, data_user.getID()),
                     ],
                     scroll= ft.ScrollMode.ALWAYS
                 )

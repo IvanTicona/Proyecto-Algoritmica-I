@@ -1,8 +1,9 @@
 import flet as ft
 from flet import Page as page
+from database import *
 
 
-def LoginPage(page: ft.Page, changeName):
+def LoginPage(page: ft.Page, changeName, data_user):
 
     title =  ft.Text("Sign Up",width=300,size=35,text_align="center",weight="w900")
     nombre = ft.TextField(width=300,height=60,hint_text="Username",border="underline",color="black",prefix_icon = ft.icons.PERSON)
@@ -22,11 +23,16 @@ def LoginPage(page: ft.Page, changeName):
             "age": age.value,
         })
 
-        # if not checkTerms.value:
-        #     print("You have accepted the terms and conditions")
-        #     return
+        if not checkTerms.value:
+            print("You have accepted the terms and conditions")
+            return
 
         # print(data_user)
+        ejecutorDeQueries.execute("INSERT INTO usuarios (id_usuario, nombre, apellido, edad, genero, telefono, correo, descripcion) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", ('',nombre.value,'',age.value, gender.value, '', email.value, '' ))
+        mycon.commit()
+        ejecutorDeQueries.execute(f"SELECT id_usuario FROM usuarios WHERE nombre = '{nombre.value}' and edad = {age.value} and correo = '{email.value}'")
+        id_usuario = ejecutorDeQueries.fetchall()
+        data_user.setID(id_usuario[0][0])
         # Resetear los campos
         nombre.value = ""
         email.value = ""
